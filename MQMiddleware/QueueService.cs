@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using MQMiddleware.Configuration;
+using MQMiddleware.AuthUtil;
 using Newtonsoft.Json;
 using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
@@ -84,6 +85,9 @@ namespace MQMiddleware
                 RequestedConnectionTimeout = optionsValue.RequestedConnectionTimeout,
                 RequestedHeartbeat = optionsValue.RequestedHeartbeat
             };
+
+            // configuration that the Cloud platform maybe require,this is an example of aliyun
+            factory.AuthMechanisms = new List<AuthMechanismFactory>() { new AliyunMechanismFactory() };
 
             _connection = factory.CreateConnection();
             // Event handling.

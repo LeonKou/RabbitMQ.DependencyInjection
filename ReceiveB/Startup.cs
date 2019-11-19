@@ -23,11 +23,22 @@ namespace ReceiveB
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddRabbitMqClient(new RabbitMqClientOptions
             {
-                HostName = "http://192.168.199.40",
+                HostName = "31044278.mq-amqp.cn-hangzhou-a.aliyuncs.com",
                 Port = 5672,
-                Password = "admin",
-                UserName = "admin",
-            });
+                Password = "1ZtItBgQR3PINsCD9QCamekOdnihJk",
+                UserName = "LTAI4FnXef37eRU7H8NEaVQ3",
+                VirtualHost = "AcadsocAMQPTest",
+            }).AddConsumptionExchange("AcadsocTest", new RabbitMqExchangeOptions
+            {
+                DeadLetterExchange = "DeadExchange",
+                AutoDelete = false,
+                Type = "direct",
+                Durable = true,
+                Queues = new List<RabbitMqQueueOptions> { new RabbitMqQueueOptions { AutoDelete = false, Exclusive = false, Durable = true, Name = "myqueue", RoutingKeys = new HashSet<string> { "mini" } } }
+            })
+            .AddMessageHandlerSingleton<CustomMessageHandler>("mini");
+
+            services.BuildServiceProvider().GetRequiredService<IQueueService>().StartConsuming();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

@@ -20,7 +20,7 @@ namespace MQ.Controllers
         {
             _queueService.Send(
                                 @object: $"{mes}",
-                                exchangeName: "exchange1",
+                                exchangeName: "AcadsocTest",
                                 routingKey: "mini"
                                  );
             return new string[] { "value1", "value2" };
