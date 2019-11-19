@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MQMiddleware;
 using MQMiddleware.Configuration;
+using System.Collections.Generic;
 
 namespace ReceiveB
 {
@@ -35,8 +36,7 @@ namespace ReceiveB
                 Type = "direct",
                 Durable = true,
                 Queues = new List<RabbitMqQueueOptions> { new RabbitMqQueueOptions { AutoDelete = false, Exclusive = false, Durable = true, Name = "myqueue", RoutingKeys = new HashSet<string> { "mini" } } }
-            })
-            .AddMessageHandlerSingleton<CustomMessageHandler>("mini");
+            });
 
             services.BuildServiceProvider().GetRequiredService<IQueueService>().StartConsuming();
         }
