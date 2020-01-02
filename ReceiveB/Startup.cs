@@ -24,12 +24,12 @@ namespace ReceiveB
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddRabbitMqClient(new RabbitMqClientOptions
             {
-                HostName = "31044278.mq-amqp.cn-hangzhou-a.aliyuncs.com",
+                HostName = "192.168.0.25",
                 Port = 5672,
-                Password = "1ZtItBgQR3PINsCD9QCamekOdnihJk",
-                UserName = "LTAI4FnXef37eRU7H8NEaVQ3",
-                VirtualHost = "AcadsocAMQPTest",
-            }).AddConsumptionExchange("AcadsocTest", new RabbitMqExchangeOptions
+                Password = "111111",
+                UserName = "leon",
+                VirtualHost = "LeonTest",
+            }).AddConsumptionExchange("LeonTest", new RabbitMqExchangeOptions
             {
                 DeadLetterExchange = "DeadExchange",
                 AutoDelete = false,
