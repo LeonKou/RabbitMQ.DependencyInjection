@@ -27,20 +27,20 @@ namespace ReceiveA
 
             services.AddRabbitMqClient(new RabbitMqClientOptions
             {
-                HostName = "192.168.0.25",
+                HostName = "172.16.127.229",
                 Port = 5672,
-                Password = "111111",
-                UserName = "leon",
-                VirtualHost = "LeonTest",
+                Password = "guest",
+                UserName = "guest",
+                VirtualHost = "/",
             }).AddConsumptionExchange("LeonTest", new RabbitMqExchangeOptions
             {
                 DeadLetterExchange = "DeadExchange",
                 AutoDelete = false,
-                Type = "direct",
+                Type = "fanout",
                 Durable = true,
-                Queues = new List<RabbitMqQueueOptions> { new RabbitMqQueueOptions { AutoDelete = false, Exclusive = false, Durable = true, Name = "myqueue", RoutingKeys = new HashSet<string> { "mini" } } }
+                Queues = new List<RabbitMqQueueOptions> { new RabbitMqQueueOptions { AutoDelete = false, Exclusive = false, Durable = true, Name = "myqueue", RoutingKeys = new HashSet<string> { "mini", "yang" } } }
             })
-            .AddMessageHandlerSingleton<CustomMessageHandler>("mini");
+            .AddMessageHandlerSingleton<CustomMessageHandler>("yang");
             
             services.BuildServiceProvider().GetRequiredService<IQueueService>().StartConsuming();
         }

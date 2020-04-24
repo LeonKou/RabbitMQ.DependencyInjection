@@ -87,7 +87,7 @@ namespace MQMiddleware
             };
 
             // configuration that the Cloud platform maybe require,this is an example of aliyun
-            factory.AuthMechanisms = new List<AuthMechanismFactory>() { new AliyunMechanismFactory() };
+            //factory.AuthMechanisms = new List<AuthMechanismFactory>() { new AliyunMechanismFactory() };
 
             _connection = factory.CreateConnection();
             // Event handling.

@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace ReceiveA.Service
+namespace ReceiveB.Service
 {
     public class CustomMessageHandler : IMessageHandler
     {
@@ -18,7 +18,7 @@ namespace ReceiveA.Service
         public void Handle(string message, string routingKey)
         {
             // Do whatever you want!
-            Console.WriteLine($"这是A--------信息为{message}routekey为{ routingKey}");
+            Console.WriteLine($"这是B--------------信息为{message}routekey为{ routingKey}");
             _logger.LogInformation("Ho-ho-hoooo");
         }
     }

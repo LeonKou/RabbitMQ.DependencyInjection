@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using MQMiddleware;
 using MQMiddleware.Configuration;
+using ReceiveB.Service;
 using System.Collections.Generic;
 
 namespace ReceiveB
@@ -24,19 +25,20 @@ namespace ReceiveB
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddRabbitMqClient(new RabbitMqClientOptions
             {
-                HostName = "192.168.0.25",
+                HostName = "172.16.127.229",
                 Port = 5672,
-                Password = "111111",
-                UserName = "leon",
-                VirtualHost = "LeonTest",
+                Password = "guest",
+                UserName = "guest",
+                VirtualHost = "/",
             }).AddConsumptionExchange("LeonTest", new RabbitMqExchangeOptions
             {
                 DeadLetterExchange = "DeadExchange",
                 AutoDelete = false,
-                Type = "direct",
+                Type = "fanout",
                 Durable = true,
-                Queues = new List<RabbitMqQueueOptions> { new RabbitMqQueueOptions { AutoDelete = false, Exclusive = false, Durable = true, Name = "myqueue", RoutingKeys = new HashSet<string> { "mini" } } }
-            });
+                Queues = new List<RabbitMqQueueOptions> { new RabbitMqQueueOptions { AutoDelete = false, Exclusive = false, Durable = true, Name = "myqueue", RoutingKeys = new HashSet<string> { "mini", "yang" } } }
+            })
+             .AddMessageHandlerSingleton<CustomMessageHandler>("mini");
 
             services.BuildServiceProvider().GetRequiredService<IQueueService>().StartConsuming();
         }
